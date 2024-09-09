@@ -23,7 +23,7 @@ Une fois vos outils choisis, explorez les avenues disponibles pour récupérer l
 1. **GET** _/secret-vault_ : Trouvez la clé secrète, mais vous aurez besoin du bon token...
 2. **GET** _/secret-agent/:id_ : Découvrez des informations publiques sur l'agent.
 
----
+Une fois que vous avez récupérer la clé, utilisez **GET /check-secret-key/:secretKey** pour voir si vous avez trouvé la bonne clé. Si vous avez la clé secrète, vous serez félicité comme un véritable maestro de l'authentification. Sinon, préparez-vous à chercher encore… et peut-être à découvrir des clés amusantes ! 🚀🎉
 
 ### **⚠️ ATTENTION :**
 

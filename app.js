@@ -8,9 +8,10 @@ const server = http.createServer(app);
 
 const USER_DATA = require("./user.data");
 const teacherToken = require("./teacherToken");
+const FAKE_SECRET_KEY = "ILoveSemicolons";
 
 let tokens = [];
-let timeout;
+let timeout = null;
 
 app.post("/start", (_, res) => {
   const auth = req.headers.authorization || "";
@@ -27,6 +28,8 @@ app.post("/start", (_, res) => {
   timeout = setTimeout(() => {
     console.log("Game over.");
     tokens = [];
+    clearTimeout(timeout);
+    timeout = null;
   }, 600000);
   res.json({
     result: true,
@@ -62,17 +65,25 @@ app.get("/access-token", (_, res) => {
 });
 
 app.get("/secret-vault", (req, res) => {
-  if (!req.headers.authorization)
+  const auth = req.headers.authorization || "";
+  if (!auth)
     return res.status(401).json({
       result: false,
       message:
         "Je ne vous reconnais pas ! Envoie-moi un header avec votre authorization. 🕵️‍♂️ Indice: Utilisez 'Authorization: Token <votre_token>' pour passer.",
     });
-  const [type, token] = req.headers.authorization?.split(" ") || [];
+  const [type, token] = auth.split(" ") || [];
   if (type !== "Token" || !token)
     return res.status(401).json({
       result: false,
-      message: "Oups! Le header n'est pas formatté correctement.",
+      message:
+        "Oups! Le header n'est pas formatté correctement. 🕵️‍♂️ Indice: Utilisez 'Authorization: Token <votre_token>' pour passer.",
+    });
+  if (token === USER_DATA.id)
+    return res.status(400).json({
+      result: false,
+      secretKey: FAKE_SECRET_KEY,
+      message: "Voici une clé secrète. Mais est-ce la bonne ? 🤔",
     });
   const myToken = tokens.find(el => el.value === token);
   if (!myToken)
@@ -89,8 +100,7 @@ app.get("/secret-vault", (req, res) => {
     });
   res.json({
     result: true,
-    message:
-      "Accès autorisé! 🎉 Félicitations, vous êtes un wizard de l'authentification.",
+    message: "Voici une clé secrète. Mais est-ce la bonne ? 🤔",
     secretKey: USER_DATA.secretKey,
   });
 });
@@ -107,6 +117,29 @@ app.get("/secret-agent/:id", (req, res) => {
       "Utilisateur identifié : voici ces informations publiques. 👤 Vous avez fait un bon choix ! Mais pour accéder aux secrets, vous devrez prouver votre authenticité avec un token valide. 💡",
     user: { username: USER_DATA.username },
   });
+});
+
+app.get("/check-secret-key/:secretKey", (req, res) => {
+  const { secretKey } = req.params;
+
+  if (secretKey === USER_DATA.secretKey)
+    return res.json({
+      result: true,
+      message:
+        "Waouh! Vous étes vraiment un wizard de l'authentification. Mettez une 🔑 dans le chat pour encourager les autres.",
+    });
+  else if (secretKey === FAKE_SECRET_KEY)
+    return res.status(401).json({
+      result: false,
+      message:
+        "Oups! Vous avez trouver une clé, mais pas la bonne . . . Réssayez!",
+    });
+  else
+    res.status(400).json({
+      result: false,
+      message:
+        "Eh bien, vous avez trouvé quelque chose, mais ce n'est ni la clé secrète ni une clé fausse ! Essayez encore, peut-être que la clé est cachée ailleurs… 🔍😜",
+    });
 });
 
 const PORT = process.env.PORT || 3000;
