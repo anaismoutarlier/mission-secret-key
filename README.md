@@ -30,18 +30,20 @@ Mais attention ! Vous aurez besoin de vos talents de développeur pour accomplir
 2. **GET** _/access-token_ : Pour obtenir un _"Access Token"_ qui expire dans 3 minutes.  
    Utilisez-le avant qu'il ne soit trop tard, ou vous devrez en obtenir un nouveau.
 
-Une fois vos outils choisis, explorez les avenues disponibles pour récupérer la clé :
+## Une fois vos outils choisis, explorez les avenues disponibles pour récupérer la clé :
 
 1. **GET** _/secret-vault_ : Trouvez la clé secrète, mais vous aurez besoin du bon token...
 2. **GET** _/secret-agent/:id_ : Découvrez des informations publiques sur l'agent.
 
-Une fois que vous avez récupérer la clé, utilisez
+## Une fois que vous avez récupérer la clé, il est temps de valider la mission.
+
+Utilisez
 
 **GET** _/check-secret-key/:secretKey_
 
 pour voir si vous avez trouvé la bonne clé. Si vous avez la clé secrète, vous serez félicité comme un véritable maestro de l'authentification. Sinon, préparez-vous à chercher encore… et peut-être à découvrir des clés amusantes ! 🚀🎉
 
-### **⚠️ ATTENTION :**
+### **⚠️ ATTENTION ⚠️**
 
 Le temps est contre vous, agent ! Vous avez **10 minutes** pour compléter la mission. Chaque seconde compte... 🕒
 
