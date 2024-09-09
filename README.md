@@ -1,0 +1,35 @@
+███╗ ███╗██╗███████╗███████╗██╗ ███████╗███████╗███████╗██████╗ ██╗ ██╗██╗ ██╗
+████╗ ████║██║██╔════╝██╔════╝██║ ██╔════╝██╔════╝██╔════╝██╔══██╗██║ ██║╚██╗ ██╔╝
+██╔████╔██║██║███████╗███████╗██║ ███████╗█████╗ ███████╗██████╔╝███████║ ╚████╔╝
+██║╚██╔╝██║██║╚════██║╚════██║██║ ╚════██║██╔══╝ ╚════██║██╔══██╗██╔══██║ ╚██╔╝  
+██║ ╚═╝ ██║██║███████║███████║██║ ███████║███████╗███████║██║ ██║██║ ██║ ██║  
+╚═╝ ╚═╝╚═╝╚══════╝╚══════╝╚═╝ ╚══════╝╚══════╝╚══════╝╚═╝ ╚═╝╚═╝ ╚═╝ ╚═╝  
+ Version 1.0
+
+# **BIENVENUE, AGENT SECRET !**
+
+Votre mission, si vous l'acceptez, est d'accéder à une **"Secret Key"** située quelque part sur le serveur **[https://mission-secret-key.onrender.com](https://mission-secret-key.onrender.com)**.
+
+Mais attention ! Vous aurez besoin de vos talents de développeur pour accomplir cette tâche. 🕵️‍♂️💻
+
+## Voici les outils à votre disposition :
+
+1. **GET** _/agent-id_ : Pour obtenir votre identifiant d'agent secret.
+2. **GET** _/access-token_ : Pour obtenir un _"Access Token"_ qui expire dans 3 minutes.  
+   Utilisez-le avant qu'il ne soit trop tard, ou vous devrez en obtenir un nouveau.
+
+Une fois vos outils choisis, explorez les avenues disponibles pour récupérer la clé :
+
+1. **GET** _/secret-vault_ : Trouvez la clé secrète, mais vous aurez besoin du bon token...
+2. **GET** _/secret-agent/:id_ : Découvrez des informations publiques sur l'agent.
+
+---
+
+### **⚠️ ATTENTION :**
+
+Le temps est contre vous, agent ! Vous avez **10 minutes** pour compléter la mission. Chaque seconde compte... 🕒
+
+_À vous de jouer !_ Choisissez judicieusement vos requêtes pour récupérer la clé secrète.  
+_Bonne chance, Agent !_
+
+Pour commencer, tapez votre première requête... 🚀
