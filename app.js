@@ -102,7 +102,7 @@ app.get("/secret-vault", isGameInProgress, (req, res) => {
       message: MESSAGES.noHeader,
     });
   const [type, token] = auth.split(" ") || [];
-  if (type !== "Token" || !token)
+  if (type !== "Bearer" || !token)
     return res.status(401).json({
       result: false,
       message: MESSAGES.wrongHeaderFormat,

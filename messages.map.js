@@ -11,9 +11,9 @@ module.exports = {
   getToken:
     "Voici votre token d'accès ! ⚡ Soyez rapide! Il expirera dans 3 minutes. Vous pouvez toujours revenir ici si vous avez besoin d'un nouveau token. 🔑",
   noHeader:
-    "Je ne vous reconnais pas ! Envoie-moi un header avec votre authorization. 🕵️ Indice: Utilisez 'Authorization: Token <votre_token>' pour passer.",
+    "Je ne vous reconnais pas ! Envoie-moi un header avec votre authorization. 🕵️ Indice: Utilisez 'Authorization: Bearer <value>' pour passer.",
   wrongHeaderFormat:
-    "Oups! Le header n'est pas formatté correctement. 🕵️ Indice: Utilisez 'Authorization: Token <votre_token>' pour passer.",
+    "Oups! Le header n'est pas formatté correctement. 🕵️ Indice: Utilisez 'Authorization: Bearer <value>' pour passer.",
   getKey: "Voici une clé secrète. Mais est-ce la bonne ? 🤔",
   invalidToken:
     "Ce token n'est pas valide 😕... Essayez d'en obtenir un nouveau !",
