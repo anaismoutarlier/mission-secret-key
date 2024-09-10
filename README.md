@@ -33,7 +33,7 @@ Mais attention ! Vous aurez besoin de vos talents de développeur pour accomplir
 ## Une fois vos outils choisis, explorez les avenues disponibles pour récupérer la clé :
 
 1. **GET** _/secret-vault_ : Trouvez la clé secrète, mais vous aurez besoin du bon token...
-2. **GET** _/secret-agent/:id_ : Découvrez des informations publiques sur l'agent.
+2. **GET** _/secret-agent/:id_ : Découvrez l'identité de l'agent secret.
 
 ## Une fois que vous avez récupérer la clé, il est temps de valider la mission.
 
