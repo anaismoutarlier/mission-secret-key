@@ -1,8 +1,8 @@
 const express = require("express");
 const http = require("http");
-const uid2 = require("uid2");
 const moment = require("moment");
-
+const jwt = require("jsonwebtoken");
+const fs = require("fs");
 const app = express();
 const server = http.createServer(app);
 
@@ -12,7 +12,9 @@ const TEACHER_TOKEN = process.env.TEACHER_TOKEN;
 const FAKE_SECRET_KEY = process.env.FAKE_SECRET_KEY;
 const REAL_SECRET_KEY = process.env.REAL_SECRET_KEY;
 
-let tokens = [];
+const JWT_PRIVATE_KEY = fs.readFileSync("./private_key.pem");
+const JWT_PUBLIC_KEY = fs.readFileSync("./public_key.pem");
+
 let currentGame = null;
 
 /**
@@ -48,7 +50,6 @@ app.post("/start", (req, res) => {
       .json({ result: false, message: MESSAGES.gameOngoing });
   currentGame = setTimeout(() => {
     console.log("Game over.");
-    tokens = [];
     clearTimeout(currentGame);
     currentGame = null;
   }, 600000);
@@ -67,7 +68,6 @@ app.post("/end", isGameInProgress, (req, res) => {
       message: MESSAGES.unauthorizedEnd,
     });
   if (currentGame) {
-    tokens = [];
     clearTimeout(currentGame);
     currentGame = null;
   }
@@ -83,14 +83,13 @@ app.get("/agent-id", (_, res) => {
 });
 
 app.get("/access-token", isGameInProgress, (_, res) => {
-  const token = {
-    value: uid2(32),
-    expiresAt: moment().add(3, "minutes").toDate(),
-  };
-  tokens.push(token);
+  const token = jwt.sign({ sub: USER_DATA.id }, JWT_PRIVATE_KEY, {
+    algorithm: "RS256",
+    expiresIn: "3m",
+  });
   res.json({
     result: true,
-    token: token.value,
+    token: token,
     message: MESSAGES.getToken,
   });
 });
@@ -114,22 +113,19 @@ app.get("/secret-vault", isGameInProgress, (req, res) => {
       secretKey: FAKE_SECRET_KEY,
       message: MESSAGES.getKey,
     });
-  const myToken = tokens.find(el => el.value === token);
-  if (!myToken)
+  try {
+    jwt.verify(token, JWT_PUBLIC_KEY);
+    res.json({
+      result: true,
+      message: MESSAGES.getKey,
+      secretKey: REAL_SECRET_KEY,
+    });
+  } catch {
     return res.status(401).json({
       result: false,
       message: MESSAGES.invalidToken,
     });
-  if (moment().isAfter(moment(myToken.expiresAt)))
-    return res.status(403).json({
-      result: false,
-      message: MESSAGES.invalidToken,
-    });
-  res.json({
-    result: true,
-    message: MESSAGES.getKey,
-    secretKey: REAL_SECRET_KEY,
-  });
+  }
 });
 
 app.get("/secret-agent/:id", isGameInProgress, (req, res) => {
